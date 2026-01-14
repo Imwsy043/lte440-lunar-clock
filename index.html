@@ -1,0 +1,165 @@
+ <!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🌍🌙 LTE440 地月精密时钟</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🌙</text></svg>">
+</head>
+<body>
+    <div class="container">
+        <!-- 头部 -->
+        <header class="header">
+            <h1 class="title">
+                <i class="fas fa-satellite"></i> LTE440 地月精密时钟
+            </h1>
+            <p class="subtitle">
+                基于中国科学院紫金山天文台《月球时间历表LTE440》的高精度时间转换
+            </p >
+            <p class="subtitle">
+                实时相对论效应计算 | 精度：数皮秒量级 | 文档日期：2025年6月25日
+            </p >
+            <div id="status" class="status-indicator">
+                <span class="dot"></span>
+                正在连接时间服务器...
+            </div>
+        </header>
+
+        <!-- 主内容 -->
+        <main class="main-content">
+            <!-- 实时时钟面板 -->
+            <section class="panel">
+                <h2 class="panel-title">
+                    <i class="fas fa-globe-americas"></i> 实时地月时间
+                </h2>
+                
+                <div class="clock-container">
+                    <div class="time-label">
+                        <i class="fas fa-earth-americas" style="color: #00cec9;"></i>
+                        🌍 地球协调世界时 (UTC)
+                    </div>
+                    <div id="earthTime" class="time-display earth-time">
+                        --:--:--
+                    </div>
+                    
+                    <div class="time-label">
+                        <i class="fas fa-moon" style="color: #fd79a8;"></i>
+                        🌙 月球质心坐标时 (TCL)
+                    </div>
+                    <div id="lunarTime" class="time-display lunar-time">
+                        --:--:--
+                    </div>
+                    
+                    <div id="timeOffset" class="difference-info">
+                        <strong>TCL - TDB 时差:</strong> 计算中...<br>
+                        <small>由于相对论效应，月球时间与地球时间存在长期漂移和周期性变化</small>
+                    </div>
+                </div>
+                
+                <div class="doc-item" style="margin-top: 20px;">
+                    <div class="doc-label">主要周期项</div>
+                    <div class="doc-value">1.651毫秒（周年项）</div>
+                </div>
+            </section>
+
+            <!-- 计时器面板 -->
+            <section class="panel">
+                <h2 class="panel-title">
+                    <i class="fas fa-stopwatch"></i> 地月计时器
+                </h2>
+                
+                <div class="clock-container">
+                    <div class="time-label">
+                        <i class="fas fa-clock" style="color: #00cec9;"></i>
+                        ⏱️ 地球计时（TDB秒）
+                    </div>
+                    <div id="earthTimer" class="timer-display earth-time">
+                        0.000
+                    </div>
+                    
+                    <div class="time-label">
+                        <i class="fas fa-clock" style="color: #fd79a8;"></i>
+                        🕐 月球计时（TCL秒）
+                    </div>
+                    <div id="lunarTimer" class="timer-display lunar-time">
+                        0.000
+                    </div>
+                    
+                    <div class="button-group">
+                        <button id="startBtn" class="btn btn-start">
+                            <i class="fas fa-play"></i> 开始
+                        </button>
+                        <button id="pauseBtn" class="btn btn-pause" disabled>
+                            <i class="fas fa-pause"></i> 暂停
+                        </button>
+                        <button id="resetBtn" class="btn btn-reset">
+                            <i class="fas fa-redo"></i> 重置
+                        </button>
+                        <button id="lapBtn" class="btn btn-lap">
+                            <i class="fas fa-flag"></i> 圈速
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="lap-section">
+                    <h3 class="lap-title">圈速记录</h3>
+                    <div id="lapList" class="lap-list">
+                        <div class="lap-item">
+                            <span>圈速记录</span>
+                            <span>地球时间 | 月球时间</span>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 文档信息面板 -->
+            <section class="panel doc-panel">
+                <h2 class="panel-title">
+                    <i class="fas fa-book"></i> 文档信息
+                </h2>
+                
+                <div id="docInfo" class="doc-content">
+                    <!-- 动态加载的文档信息 -->
+                </div>
+                
+                <div style="margin-top: 20px; padding: 15px; background: rgba(255,255,255,0.05); border-radius: 10px;">
+                    <p style="margin-bottom: 10px;">
+                        <strong>《月球时间历表LTE440》关键参数：</strong>
+                    </p >
+                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 10px;">
+                        <div>
+                            <small style="color: #aaa;">长期漂移率</small><br>
+                            dTCL/dTDB = 1 + 6.798355238×10⁻¹⁰
+                        </div>
+                        <div>
+                            <small style="color: #aaa;">主要周期项</small><br>
+                            振幅：1.651毫秒，周期：365.256天
+                        </div>
+                        <div>
+                            <small style="color: #aaa;">精度</small><br>
+                            数皮秒量级（千万年误差＜1秒）
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+
+        <!-- 页脚 -->
+        <footer class="footer">
+            <p>
+                <i class="fas fa-code"></i> 基于《月球时间历表LTE440》实现 |
+                <i class="fas fa-user"></i> 作者：卢旭、杨天宁、谢懿 |
+                <i class="fas fa-university"></i> 中国科学院紫金山天文台
+            </p >
+            <p style="margin-top: 10px; font-size: 0.8rem; opacity: 0.7;">
+                本软件严格遵循IAU 2024决议2定义，用于高精度地月时间转换。
+                文档参考：LTE440月球时间历表，2025年6月25日。
+            </p >
+        </footer>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
